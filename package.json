@@ -1,0 +1,13 @@
+{
+  "description": "Change the font of some text",
+  "name": "ep_font_family",
+  "version": "0.0.1",
+  "author": {
+    "name": "John McLear",
+    "email": "john@mclear.co.uk"
+  },
+  "dependencies": {},
+  "engines": {
+    "node": "*"
+  }
+}
