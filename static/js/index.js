@@ -9,7 +9,7 @@ var FontFamily = ['Arial', 'TimesNewRoman', 'Calibri', 'Helvetica', 'Courier', '
 
 // Bind the event handler to the toolbar buttons
 var postAceInit = function(hook, context){
-  var hs = $('#font-selection');
+  var hs = $('.font-selection');
   hs.on('change', function(){
     var value = $(this).val();
     var intValue = parseInt(value,10);
@@ -20,6 +20,9 @@ var postAceInit = function(hook, context){
       hs.val("dummy");
     }
   })
+  $('.font_family').hover(function(){
+    $('.submenu > .font-selection').attr('size', 6);
+  });
 };
 
 

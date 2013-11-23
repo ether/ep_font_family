@@ -13,7 +13,8 @@
         "eejsBlock_editbarMenuLeft": "ep_font_family/index",
         "collectContentPre": "ep_font_family/static/js/shared",
         "collectContentPost": "ep_font_family/static/js/shared",
-        "getLineHTMLForExport": "ep_font_family/index"
+        "getLineHTMLForExport": "ep_font_family/index",
+        "eejsBlock_dd_format":"ep_font_family/index"
       }
     }
   ]

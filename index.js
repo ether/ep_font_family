@@ -5,6 +5,11 @@ exports.eejsBlock_editbarMenuLeft = function (hook_name, args, cb) {
   return cb();
 }
 
+exports.eejsBlock_dd_format = function(hook_name, args, cb){
+  args.content = args.content + eejs.require("ep_font_family/templates/fileMenu.ejs");
+  return cb();
+}
+
 function getInlineStyle(font) {
   return "font-family: "+font+";";
 }
