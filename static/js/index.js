@@ -23,6 +23,10 @@ var postAceInit = function(hook, context){
   $('.font_family').hover(function(){
     $('.submenu > .font-selection').attr('size', 6);
   });
+  $('.font-icon').click(function(){
+    $('#font').toggle();
+  });
+
 };
 
 
@@ -43,19 +47,14 @@ exports.aceCreateDomLine = function(name, context){
 
   var tagIndex;
   if (FontFamilyType) tagIndex = _.indexOf(FontFamily, FontFamilyType[1]);
-
-      
+     
   if (tagIndex !== undefined && tagIndex >= 0){
-      console.log('COLOR');
-      console.log(tagIndex, FontFamilyType[1]);    
-      
     var tag = FontFamily[tagIndex];
     var modifier = {
       extraOpenTags: '<span style="font-family: ' + tag + '">',
       extraCloseTags: '</span>',
       cls: cls
     };
-    console.log(cls);
     return [modifier];
   }
   return [];
@@ -67,22 +66,19 @@ exports.aceCreateDomLine = function(name, context){
 // Passing a level >= 0 will set a FontFamily on the selected lines, level < 0 
 // will remove it
 function doInsertFontFamily(level){
-  var rep = this.rep,
-    documentAttributeManager = this.documentAttributeManager;
-  if (!(rep.selStart && rep.selEnd) || (level >= 0 && FontFamily[level] === undefined))
-  {
+  var rep = this.rep, documentAttributeManager = this.documentAttributeManager;
+  if (!(rep.selStart && rep.selEnd) || (level >= 0 && FontFamily[level] === undefined)){
     return;
   }
-  
-    if(level >= 0){
-          documentAttributeManager.setAttributesOnRange(rep.selStart, rep.selEnd, [
-                ['FontFamily', FontFamily[level]]
-          ]);
-    }else{
-        documentAttributeManager.setAttributesOnRange(rep.selStart, rep.selEnd, [
-                    ['FontFamily', '']
-              ]);
-    }
+  if(level >= 0){
+    documentAttributeManager.setAttributesOnRange(rep.selStart, rep.selEnd, [
+      ['FontFamily', FontFamily[level]]
+    ]);
+  }else{
+    documentAttributeManager.setAttributesOnRange(rep.selStart, rep.selEnd, [
+      ['FontFamily', '']
+    ]);
+  }
 }
 
 
@@ -94,9 +90,6 @@ function aceInitialized(hook, context){
 
 
 // Export all hooks
-//exports.aceRegisterBlockElements = aceRegisterBlockElements;
 exports.aceInitialized = aceInitialized;
 exports.postAceInit = postAceInit;
-//exports.aceDomLineProcessLineAttributes = aceDomLineProcessLineAttributes;
 exports.aceAttribsToClasses = aceAttribsToClasses;
-//exports.aceEditorCSS = aceEditorCSS;
