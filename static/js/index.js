@@ -16,7 +16,7 @@ var postAceInit = function(hook, context){
     if(!_.isNaN(intValue)){
       context.ace.callWithAce(function(ace){
         ace.ace_doInsertFontFamily(intValue);
-      },'insertColor' , true);
+      },'insertFontFamily' , true);
       hs.val("dummy");
     }
   })
@@ -33,6 +33,10 @@ var postAceInit = function(hook, context){
 
 // Our FontFamily attribute will result in a heaading:h1... :h6 class
 function aceAttribsToClasses(hook, context){
+  if(context.key.indexOf("FontFamily:") !== -1){
+    var fontFamily = /(?:^| )FontFamily:([A-Za-z0-9]*)/.exec(context.key);
+    return ['FontFamily:' + fontFamily[1] ];
+  }
   if(context.key == 'FontFamily'){
     return ['FontFamily:' + context.value ];
   }
