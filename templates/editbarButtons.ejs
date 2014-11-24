@@ -1,7 +1,7 @@
 <li class="separator acl-write"></li>
 <li class="acl-write font-icon">
-  <a title="Font Family">
-    <span class="buttonicon" style="background-image:url('../static/plugins/ep_font_family/static/img/icon.png');"></span>
+  <a title="Font Family" class="ep_font_family">
+    <span class="buttonicon"></span>
   </a>
 </li>
 <li id="font" class="acl-write" style="display:none;">
@@ -20,3 +20,15 @@
 
     </select>
 </li>
+
+<style>
+
+  .ep_font_family {
+    font-family:font-awesome;
+  }
+
+  .ep_font_family > .buttonicon:before{
+    content:"\e81b";
+    top: 2px !important;
+  }
+</style>
