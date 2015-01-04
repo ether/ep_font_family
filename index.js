@@ -1,35 +1,46 @@
 var eejs = require('ep_etherpad-lite/node/eejs/');
-var Changeset = require("ep_etherpad-lite/static/js/Changeset");
+var fonts = ["arial", "times-new-roman", "calibri", "helvetica", "courier", "palatino", "garamond", "bookman", "avant-garde"];
+var fs = require('fs');
+
+/******************** 
+* UI 
+*/ 
 exports.eejsBlock_editbarMenuLeft = function (hook_name, args, cb) {
   args.content = args.content + eejs.require("ep_font_family/templates/editbarButtons.ejs");
   return cb();
 }
 
-exports.eejsBlock_dd_format = function(hook_name, args, cb){
+exports.eejsBlock_dd_format = function (hook_name, args, cb) {
   args.content = args.content + eejs.require("ep_font_family/templates/fileMenu.ejs");
   return cb();
 }
 
-function getInlineStyle(font) {
-  return "font-family: "+font+";";
-}
-// line, apool,attribLine,text
-exports.getLineHTMLForExport = function (hook, context) {
-  var header = _analyzeLine(context.attribLine, context.apool);
-  if (header) {
-    var inlineStyle = getInlineStyle(header);
-    return "<span style=\"" + inlineStyle + "\">" + context.text.substring(1) + "</span>";
-  }
+
+/******************** 
+* Editor
+*/
+
+// Allow <whatever> to be an attribute 
+exports.aceAttribClasses = function(hook_name, attr, cb){
+  for (var i in fonts){
+    var font = fonts[i];
+    attr[font] = 'tag:'+font;
+  };
+  cb(attr);
 }
 
-function _analyzeLine(alineAttrs, apool) {
-  var header = null;
-  if (alineAttrs) {
-    var opIter = Changeset.opIterator(alineAttrs);
-    if (opIter.hasNext()) {
-      var op = opIter.next();
-      header = Changeset.opAttributeValue(op, 'fonts', apool);
-    }
-  }
-  return header;
-}
+/******************** 
+* Export
+*/
+// Include CSS for HTML export
+exports.stylesForExport = function(hook, padId, cb){
+  var cssPath = __dirname +'/static/css/iframe.css';
+  fs.readFile(cssPath, function(err, data){
+    cb(data);
+  });  
+};
+
+// Add the props to be supported in export
+exports.exportHtmlAdditionalTags = function(hook, pad, cb){
+  cb(fonts);
+};

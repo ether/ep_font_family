@@ -1,34 +1,22 @@
 <li class="separator acl-write"></li>
-<li class="acl-write font-icon">
-  <a title="Font Family" class="ep_font_family">
+<li class="acl-write font-family-icon ep_font_family">
+  <a title="Font family">
     <span class="buttonicon"></span>
   </a>
 </li>
-<li id="font" class="acl-write" style="display:none;">
-    <select class="font-selection" style="width:60px;">
-        <option value="dummy" selected data-l10n-id="ep_font_family.font">Font</option>
-        <option value="0">Arial</option>
-        <option value="1">Times New Roman</option>
-        <option value="2">Calibri</option>
-        <option value="3">Helvetica</option>
-        <option value="4">Courier</option>
-        <option value="5">Palatino</option>
-        <option value="6">Garamond</option>
-        <option value="7">Bookman</option>
-        <option value="8">Avant Guard</option>
 
-
+<li id="font-family" class="acl-write" style="display:none;">
+    <select class="family-selection">
+        <option value="dummy" selected data-l10n-id="ep_font_family.family">Font</option>
     </select>
 </li>
 
 <style>
-
-  .ep_font_family {
-    font-family:font-awesome;
-  }
-
-  .ep_font_family > .buttonicon:before{
-    content:"\e81b";
-    top: 2px !important;
-  }
+ep_font_family {
+  font-family:font-awesome;
+}
+.ep_font_family > a > .buttonicon:before{
+  content:"\e81f";
+  top: 2px !important;
+}
 </style>
