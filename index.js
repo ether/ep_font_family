@@ -55,9 +55,14 @@ function rewriteLine(context){
   fonts.forEach(function(font){
     if(lineContent){
       var fontName = font.substring(4);
-      lineContent = lineContent.replace("<"+font, "<span style='font-family:"+fontName+"'");
-      lineContent = lineContent.replace("</"+font, "</span");
+      lineContent = lineContent.replaceAll("<"+font, "<span style='font-family:"+fontName+"'");
+      lineContent = lineContent.replaceAll("</"+font, "</span");
     }
   });
   return lineContent;
 }
+
+String.prototype.replaceAll = function(str1, str2, ignore) 
+{
+    return this.replace(new RegExp(str1.replace(/([\/\,\!\\\^\$\{\}\[\]\(\)\.\*\+\?\|\<\>\-\&])/g,"\\$&"),(ignore?"gi":"g")),(typeof(str2)=="string")?str2.replace(/\$/g,"$$$$"):str2);
+} 
