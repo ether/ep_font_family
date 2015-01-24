@@ -1,6 +1,6 @@
 var $, jQuery;
 var $ = require('ep_etherpad-lite/static/js/rjquery').$;
-var fonts = ["arial", "times-new-roman", "calibri", "helvetica", "courier", "palatino", "garamond", "bookman", "avant-garde"];
+var fonts = ["fontarial", "fonttimes-new-roman", "fontcalibri", "fonthelvetica", "fontcourier", "fontpalatino", "fontgaramond", "fontbookman", "fontavant-garde"];
 
 /*****
 * Basic setup
@@ -10,9 +10,10 @@ var fonts = ["arial", "times-new-roman", "calibri", "helvetica", "courier", "pal
 exports.postAceInit = function(hook, context){
   var fontFamily = $('.family-selection');
   $.each(fonts, function(k, font){
+    font = font.substring(4);
     var fontString = capitaliseFirstLetter(font)
     fontString = fontString.split("-").join(" ");
-    fontFamily.append("<option value='"+font+"'>"+fontString+"</option>");
+    fontFamily.append("<option value='font"+font+"'>"+fontString+"</option>");
   });
   fontFamily.on('change', function(){
     var value = $(this).val();

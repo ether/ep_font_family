@@ -1,5 +1,5 @@
 var eejs = require('ep_etherpad-lite/node/eejs/');
-var fonts = ["arial", "times-new-roman", "calibri", "helvetica", "courier", "palatino", "garamond", "bookman", "avant-garde"];
+var fonts = ["fontarial", "fonttimes-new-roman", "fontcalibri", "fonthelvetica", "fontcourier", "fontpalatino", "fontgaramond", "fontbookman", "fontavant-garde"];
 var fs = require('fs');
 
 /******************** 
@@ -24,7 +24,7 @@ exports.eejsBlock_dd_format = function (hook_name, args, cb) {
 exports.aceAttribClasses = function(hook_name, attr, cb){
   for (var i in fonts){
     var font = fonts[i];
-    attr[font] = 'tag:'+font;
+    attr[font] = 'tag:font'+font;
   };
   cb(attr);
 }
@@ -44,3 +44,20 @@ exports.stylesForExport = function(hook, padId, cb){
 exports.exportHtmlAdditionalTags = function(hook, pad, cb){
   cb(fonts);
 };
+
+
+exports.asyncLineHTMLForExport = function (hook, context, cb) {
+  cb(rewriteLine);
+}
+
+function rewriteLine(context){
+  var lineContent = context.lineContent;
+  fonts.forEach(function(font){
+    if(lineContent){
+      var fontName = font.substring(4);
+      lineContent = lineContent.replace("<"+font, "<span style='font-family:"+fontName+"'");
+      lineContent = lineContent.replace("</"+font, "</span");
+    }
+  });
+  return lineContent;
+}

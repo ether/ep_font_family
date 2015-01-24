@@ -19,7 +19,8 @@
         "eejsBlock_dd_format":"ep_font_family/index",
         "aceAttribClasses":"ep_font_family/index",
         "stylesForExport" : "ep_font_family/index",
-        "exportHtmlAdditionalTags" : "ep_font_family/index"
+        "exportHtmlAdditionalTags" : "ep_font_family/index",
+        "asyncLineHTMLForExport": "ep_font_family/index"
       }
     }
   ]
