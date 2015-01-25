@@ -25,4 +25,6 @@ fontbookman{
 fontavant-garde{
   font-family: Avant Garde,Avantgarde,Century Gothic,CenturyGothic,AppleGothic,sans-serif; 
 }
-
+*{
+  font-family:inherit
+}
