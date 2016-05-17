@@ -1,7 +1,7 @@
 {
   "description": "Add support for different Fonts",
   "name": "ep_font_family",
-  "version": "0.2.6",
+  "version": "0.2.7",
   "license": "Apache-2.0",
   "author": {
     "name": "John McLear",
@@ -9,7 +9,7 @@
   },
   "dependencies": {},
   "peerDependencies": {
-    "ep_etherpad-lite":">=1.5.1"
+    "ep_etherpad-lite": ">=1.5.1"
   },
   "engines": {
     "node": "*"
