@@ -1,6 +1,6 @@
 var $, jQuery;
 var $ = require('ep_etherpad-lite/static/js/rjquery').$;
-var fonts = ["fontarial", "fonttimes-new-roman", "fontcalibri", "fonthelvetica", "fontcourier", "fontpalatino", "fontgaramond", "fontbookman", "fontavant-garde"];
+var fonts = ["fontarial", "fontavant-garde", "fontbookman", "fontcalibri", "fontcourier", "fontgaramond", "fonthelvetica", "fontmonospace", "fontpalatino", "fonttimes-new-roman"];
 
 /*****
 * Basic setup
