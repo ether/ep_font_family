@@ -1,5 +1,5 @@
 var eejs = require('ep_etherpad-lite/node/eejs/');
-var fonts = ["fontarial", "fonttimes-new-roman", "fontcalibri", "fonthelvetica", "fontcourier", "fontpalatino", "fontgaramond", "fontbookman", "fontavant-garde"];
+var fonts = ["fontarial", "fontavant-garde", "fontbookman", "fontcalibri", "fontcourier", "fontgaramond", "fonthelvetica", "fontmonospace", "fontpalatino", "fonttimes-new-roman"];
 var fs = require('fs');
 
 /******************** 

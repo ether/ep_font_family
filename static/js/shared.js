@@ -3,7 +3,7 @@ exports.collectContentPre = function(hook, context){
   var state = context.state;
   var lineAttributes = state.lineAttributes
   var tagIndex = tname;
-  var fonts = ["fontarial", "fonttimes-new-roman", "fontcalibri", "fonthelvetica", "fontcourier", "fontpalatino", "fontgaramond", "fontbookman", "fontavant-garde"];
+  var fonts = ["fontarial", "fontavant-garde", "fontbookman", "fontcalibri", "fontcourier", "fontgaramond", "fonthelvetica", "fontmonospace", "fontpalatino", "fonttimes-new-roman"];
   if(fonts.indexOf(tname) !== -1){
     context.cc.doAttrib(state, tname);
   }
