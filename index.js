@@ -34,10 +34,10 @@ exports.aceAttribClasses = function(hook_name, attr, cb){
 */
 // Include CSS for HTML export
 exports.stylesForExport = function(hook, padId, cb){
-  var cssPath = __dirname +'/static/css/iframe.css';
+  var cssPath = __dirname +'/static/css/fonts.css';
   fs.readFile(cssPath, function(err, data){
     cb(data);
-  });  
+  });
 };
 
 // Add the props to be supported in export

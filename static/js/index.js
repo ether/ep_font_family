@@ -8,13 +8,14 @@ var fonts = ["fontarial", "fontavant-garde", "fontbookman", "fontcalibri", "font
 
 // Bind the event handler to the toolbar buttons
 exports.postAceInit = function(hook, context){
-  var fontFamily = $('.family-selection');
+  var fontFamily = $('select.family-selection');
   $.each(fonts, function(k, font){
     font = font.substring(4);
     var fontString = capitaliseFirstLetter(font)
     fontString = fontString.split("-").join(" ");
     fontFamily.append("<option value='font"+font+"'>"+fontString+"</option>");
   });
+  fontFamily.niceSelect('update');
   fontFamily.on('change', function(){
     var value = $(this).val();
     context.ace.callWithAce(function(ace){
@@ -25,15 +26,6 @@ exports.postAceInit = function(hook, context){
       ace.ace_setAttributeOnSelection(value, true);
     },'insertfontFamily' , true);
   })
-  $('.ep_font_family').click(function(){
-    var family = $(this).data("family");
-  });
-  $('.font_family').hover(function(){
-    $('.submenu > .family-selection').attr('family', 6);
-  });
-  $('.font-family-icon').click(function(){
-    $('#font-family').toggle();
-  });
 };
 
 // To do show what font family is active on current selection
@@ -103,7 +95,7 @@ exports.aceAttribClasses = function(hook, attr){
 }
 
 exports.aceEditorCSS = function(hook_name, cb){
-  return ["/ep_font_family/static/css/iframe.css"];
+  return ["/ep_font_family/static/css/fonts.css"];
 }
 
 function capitaliseFirstLetter(string){
