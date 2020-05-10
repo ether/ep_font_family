@@ -13,7 +13,7 @@ exports.postAceInit = function(hook, context){
     font = font.substring(4);
     var fontString = capitaliseFirstLetter(font)
     fontString = fontString.split("-").join(" ");
-    fontFamily.append("<option value='font"+font+"'>"+fontString+"</option>");
+    fontFamily.append($("<option>").attr("value", "font" + font).text(fontString));
   });
   fontFamily.niceSelect('update');
   fontFamily.on('change', function(){
