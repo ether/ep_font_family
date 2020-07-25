@@ -1,9 +1,12 @@
 [![Travis (.org)](https://api.travis-ci.org/JohnMcLear/ep_font_family.git.svg?branch=develop)](https://travis-ci.org/github/JohnMcLear/ep_font_family.git)
 
-# My awesome plugin README example
-Explain what your plugin does and who it's useful for.
+# Change the Font in Etherpad
+Simple drop down support for changing to use different fonts in Etherpad.
+
+Export is supported.
 
 ## Example animated gif of usage if appropriate
+Please commit!
 
 ## Installing
 npm install ep_font_family
@@ -11,10 +14,10 @@ npm install ep_font_family
 or Use the Etherpad ``/admin`` interface.
 
 ## Settings
-Document settings if any
+No settings.
 
 ## Testing
-Document how to run backend / frontend tests.
+TODO
 
 ### Frontend
 
