@@ -9,7 +9,7 @@
   },
   "dependencies": {},
   "peerDependencies": {
-    "ep_etherpad-lite": ">=1.5.1"
+    "ep_etherpad-lite": ">=1.8.6"
   },
   "engines": {
     "node": "*"
