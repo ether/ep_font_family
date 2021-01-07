@@ -1,3 +1,5 @@
+'use strict';
+
 exports.collectContentPre = (hook, context) => {
   const tname = context.tname;
   const state = context.state;
