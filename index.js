@@ -5,12 +5,12 @@ const fs = require('fs');
 /** ******************
 * UI
 */
-exports.eejsBlock_editbarMenuLeft = function (hook_name, args, cb) {
+exports.eejsBlock_editbarMenuLeft = (hook_name, args, cb) => {
   args.content += eejs.require('ep_font_family/templates/editbarButtons.ejs');
   return cb();
 };
 
-exports.eejsBlock_dd_format = function (hook_name, args, cb) {
+exports.eejsBlock_dd_format = (hook_name, args, cb) => {
   args.content += eejs.require('ep_font_family/templates/fileMenu.ejs');
   return cb();
 };
@@ -21,8 +21,8 @@ exports.eejsBlock_dd_format = function (hook_name, args, cb) {
 */
 
 // Allow <whatever> to be an attribute
-exports.aceAttribClasses = function (hook_name, attr, cb) {
-  for (const i in fonts) {
+exports.aceAttribClasses = (hook_name, attr, cb) => {
+  for (const i of fonts) {
     const font = fonts[i];
     attr[font] = `tag:font${font}`;
   }
@@ -34,11 +34,11 @@ exports.aceAttribClasses = function (hook_name, attr, cb) {
 */
 
 // Add the props to be supported in export
-exports.exportHtmlAdditionalTags = function (hook, pad, cb) {
+exports.exportHtmlAdditionalTags = (hook, pad, cb) => {
   cb(fonts);
 };
 
-exports.getLineHTMLForExport = function (hook, context, cb) {
+exports.getLineHTMLForExport = (hook, context, cb) => {
   let lineContent = context.lineContent;
   fonts.forEach((font) => {
     if (lineContent) {
