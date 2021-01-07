@@ -64,6 +64,8 @@ exports.getLineHTMLForExport = (hook, context, cb) => {
 };
 
 
-/* eslint-disable-line no-extend-native, max-len */ String.prototype.replaceAll = function (str1, str2, ignore) {
-/* eslint-disable-line no-useless-escape, max-len */ return this.replace(new RegExp(str1.replace(/([\/\,\!\\\^\$\{\}\[\]\(\)\.\*\+\?\|\<\>\-\&])/g, '\\$&'), (ignore ? 'gi' : 'g')), (typeof (str2) === 'string') ? str2.replace(/\$/g, '$$$$') : str2);
+/* eslint-disable-next-line no-extend-native, max-len */
+String.prototype.replaceAll = function (str1, str2, ignore) {
+/* eslint-disable-next-line no-useless-escape, max-len */
+  return this.replace(new RegExp(str1.replace(/([\/\,\!\\\^\$\{\}\[\]\(\)\.\*\+\?\|\<\>\-\&])/g, '\\$&'), (ignore ? 'gi' : 'g')), (typeof (str2) === 'string') ? str2.replace(/\$/g, '$$$$') : str2);
 };
