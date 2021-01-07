@@ -1,3 +1,5 @@
+'use strict';
+
 var $, jQuery;
 var $ = require('ep_etherpad-lite/static/js/rjquery').$;
 var fonts = ['fontarial', 'fontavant-garde', 'fontbookman', 'fontcalibri', 'fontcourier', 'fontgaramond', 'fonthelvetica', 'fontmonospace', 'fontpalatino', 'fonttimes-new-roman'];
@@ -29,7 +31,7 @@ exports.postAceInit = function (hook, context) {
 };
 
 // To do show what font family is active on current selection
-exports.aceEditEvent = function (hook, call, cb) {
+exports.aceEditEvent = (hook, call, cb) => {
   const cs = call.callstack;
 
   if (!(cs.type == 'handleClick') && !(cs.type == 'handleKeyEvent') && !(cs.docTextChanged)) {
@@ -71,7 +73,7 @@ exports.aceEditEvent = function (hook, call, cb) {
 
 // Our fontFamily attribute will result in a class
 // I'm not sure if this is actually required..
-exports.aceAttribsToClasses = function (hook, context) {
+exports.aceAttribsToClasses = (hook, context) => {
   if (fonts.indexOf(context.key) !== -1) {
     return [context.key];
   }
@@ -79,14 +81,12 @@ exports.aceAttribsToClasses = function (hook, context) {
 
 // Block elements
 // I'm not sure if this is actually required..
-exports.aceRegisterBlockElements = function () {
-  return fonts;
-};
+exports.aceRegisterBlockElements = () => fonts;
 
 // Register attributes that are html markup / blocks not just classes
 // This should make export export properly IE <sub>helllo</sub>world
 // will be the output and not <span class=sub>helllo</span>
-exports.aceAttribClasses = function (hook, attr) {
+exports.aceAttribClasses = (hook, attr) => {
   $.each(fonts, (k, v) => {
     attr[v] = `tag:${v}`;
   });

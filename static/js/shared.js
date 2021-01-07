@@ -1,4 +1,4 @@
-exports.collectContentPre = function (hook, context) {
+exports.collectContentPre = (hook, context) => {
   const tname = context.tname;
   const state = context.state;
   const lineAttributes = state.lineAttributes;
@@ -10,7 +10,7 @@ exports.collectContentPre = function (hook, context) {
 };
 
 // never seems to be run
-exports.collectContentPost = function (hook, context) {
+exports.collectContentPost = (hook, context) => {
   const tname = context.tname;
   const state = context.state;
   const lineAttributes = state.lineAttributes;

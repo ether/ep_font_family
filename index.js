@@ -1,3 +1,5 @@
+'use strict';
+
 const eejs = require('ep_etherpad-lite/node/eejs/');
 const fonts = ['fontarial', 'fontavant-garde', 'fontbookman', 'fontcalibri', 'fontcourier', 'fontgaramond', 'fonthelvetica', 'fontmonospace', 'fontpalatino', 'fonttimes-new-roman'];
 const fs = require('fs');
