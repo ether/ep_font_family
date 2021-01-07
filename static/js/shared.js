@@ -1,11 +1,21 @@
 'use strict';
 
+const fonts = [
+  'fontarial',
+  'fontavant-garde',
+  'fontbookman',
+  'fontcalibri',
+  'fontcourier',
+  'fontgaramond',
+  'fonthelvetica',
+  'fontmonospace',
+  'fontpalatino',
+  'fonttimes-new-roman',
+];
+
 exports.collectContentPre = (hook, context) => {
   const tname = context.tname;
   const state = context.state;
-  const lineAttributes = state.lineAttributes;
-  const tagIndex = tname;
-  const fonts = ['fontarial', 'fontavant-garde', 'fontbookman', 'fontcalibri', 'fontcourier', 'fontgaramond', 'fonthelvetica', 'fontmonospace', 'fontpalatino', 'fonttimes-new-roman'];
   if (fonts.indexOf(tname) !== -1) {
     context.cc.doAttrib(state, tname);
   }

@@ -1,8 +1,17 @@
 'use strict';
 
-var $, jQuery;
-var $ = require('ep_etherpad-lite/static/js/rjquery').$;
-var fonts = ['fontarial', 'fontavant-garde', 'fontbookman', 'fontcalibri', 'fontcourier', 'fontgaramond', 'fonthelvetica', 'fontmonospace', 'fontpalatino', 'fonttimes-new-roman'];
+const fonts = [
+  'fontarial',
+  'fontavant-garde',
+  'fontbookman',
+  'fontcalibri',
+  'fontcourier',
+  'fontgaramond',
+  'fonthelvetica',
+  'fontmonospace',
+  'fontpalatino',
+  'fonttimes-new-roman',
+];
 
 /** ***
 * Basic setup
@@ -34,12 +43,12 @@ exports.postAceInit = function (hook, context) {
 exports.aceEditEvent = (hook, call, cb) => {
   const cs = call.callstack;
 
-  if (!(cs.type == 'handleClick') && !(cs.type == 'handleKeyEvent') && !(cs.docTextChanged)) {
+  if (!(cs.type === 'handleClick') && !(cs.type === 'handleKeyEvent') && !(cs.docTextChanged)) {
     return false;
   }
 
   // If it's an initial setup event then do nothing..
-  if (cs.type == 'setBaseText' || cs.type == 'setup') return false;
+  if (cs.type === 'setBaseText' || cs.type === 'setup') return false;
   // It looks like we should check to see if this section has this attribute
   setTimeout(() => { // avoid race condition..
     $('.family-selection').val('dummy'); // reset value to the dummy value
@@ -86,17 +95,13 @@ exports.aceRegisterBlockElements = () => fonts;
 // Register attributes that are html markup / blocks not just classes
 // This should make export export properly IE <sub>helllo</sub>world
 // will be the output and not <span class=sub>helllo</span>
-exports.aceAttribClasses = (hook, attr) => {
+exports.aceAttribClasses = (hookName, attr) => {
   $.each(fonts, (k, v) => {
     attr[v] = `tag:${v}`;
   });
   return attr;
 };
 
-exports.aceEditorCSS = function (hook_name, cb) {
-  return ['/ep_font_family/static/css/fonts.css'];
-};
+exports.aceEditorCSS = (hookName, cb) => ['/ep_font_family/static/css/fonts.css'];
 
-function capitaliseFirstLetter(string) {
-  return string.charAt(0).toUpperCase() + string.slice(1);
-}
+const capitaliseFirstLetter = (string) => string.charAt(0).toUpperCase() + string.slice(1);
