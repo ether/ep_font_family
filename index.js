@@ -51,7 +51,7 @@ exports.exportHtmlAdditionalTags = (hook, pad, cb) => {
   cb(fonts);
 };
 
-exports.getLineHTMLForExport = (hook, context, cb) => {
+exports.getLineHTMLForExport = async (hook, context, cb) => {
   let lineContent = context.lineContent;
   fonts.forEach((font) => {
     if (lineContent) {
