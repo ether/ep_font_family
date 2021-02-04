@@ -18,7 +18,7 @@ const fonts = [
 ******/
 
 // Bind the event handler to the toolbar buttons
-exports.postAceInit = function (hook, context) {
+exports.postAceInit = (hook, context) => {
   const fontFamily = $('select.family-selection');
   $.each(fonts, (k, font) => {
     font = font.substring(4);
