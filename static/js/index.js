@@ -40,7 +40,7 @@ exports.postAceInit = (hook, context) => {
 };
 
 // To do show what font family is active on current selection
-exports.aceEditEvent = (hook, call, cb) => {
+exports.aceEditEvent = (hook, call) => {
   const cs = call.callstack;
 
   if (!(cs.type === 'handleClick') && !(cs.type === 'handleKeyEvent') && !(cs.docTextChanged)) {
