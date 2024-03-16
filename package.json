@@ -1,7 +1,7 @@
 {
   "description": "Add support for different Fonts",
   "name": "ep_font_family",
-  "version": "0.5.43",
+  "version": "0.5.44",
   "license": "Apache-2.0",
   "author": {
     "name": "John McLear",
