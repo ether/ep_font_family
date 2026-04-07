@@ -11,7 +11,7 @@ Export is supported.
 Please commit!
 
 ## Installing
-npm install ep_font_family
+pnpm run plugins install ep_font_family
 
 or Use the Etherpad ``/admin`` interface.
 
