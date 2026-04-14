@@ -36,6 +36,7 @@ exports.postAceInit = (hook, context) => {
       });
       ace.ace_setAttributeOnSelection(value, true);
     }, 'insertfontFamily', true);
+    context.ace.focus();
   });
 };
 
