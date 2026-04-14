@@ -1,64 +1,29 @@
 'use strict';
 
-const fonts = [
-  'fontarial',
-  'fontavant-garde',
-  'fontbookman',
-  'fontcalibri',
-  'fontcourier',
-  'fontgaramond',
-  'fonthelvetica',
-  'fontmonospace',
-  'fontpalatino',
-  'fonttimes-new-roman',
-];
+const fonts = require('./fonts');
+const {template} = require('ep_plugin_helpers');
 
-const eejs = require('ep_etherpad-lite/node/eejs/');
+exports.eejsBlock_editbarMenuLeft = template('ep_font_family/templates/editbarButtons.ejs');
+exports.eejsBlock_dd_format = template('ep_font_family/templates/fileMenu.ejs');
 
-/** ******************
-* UI
-*/
-exports.eejsBlock_editbarMenuLeft = (hookName, args, cb) => {
-  args.content += eejs.require('ep_font_family/templates/editbarButtons.ejs');
-  return cb();
-};
-
-exports.eejsBlock_dd_format = (hookName, args, cb) => {
-  args.content += eejs.require('ep_font_family/templates/fileMenu.ejs');
-  return cb();
-};
-
-
-/** ******************
-* Editor
-*/
-
-// Allow <whatever> to be an attribute
+// Server-side aceAttribClasses — maps font names to tag: prefix.
+// This must match the client-side mapping exactly.
 exports.aceAttribClasses = (hookName, attr, cb) => {
   for (const font of fonts) {
-    attr[font] = `tag:font${font}`;
+    attr[font] = `tag:${font}`;
   }
   return cb(attr);
 };
 
-/** ******************
-* Export
-*/
-
-// Add the props to be supported in export
-exports.exportHtmlAdditionalTags = (hook, pad, cb) => {
-  return cb(fonts);
-};
+exports.exportHtmlAdditionalTags = (hook, pad, cb) => cb(fonts);
 
 exports.getLineHTMLForExport = async (hook, context) => {
   let lineContent = context.lineContent;
-  fonts.forEach((font) => {
-    if (lineContent) {
-      const fontName = font.substring(4);
-      lineContent = lineContent.replaceAll(`<${font}`, `<span style='font-family:${fontName}'`);
-      lineContent = lineContent.replaceAll(`</${font}`, '</span');
-    }
-  });
+  for (const font of fonts) {
+    if (!lineContent) break;
+    const fontName = font.substring(4);
+    lineContent = lineContent.replaceAll(`<${font}`, `<span style='font-family:${fontName}'`);
+    lineContent = lineContent.replaceAll(`</${font}`, '</span');
+  }
   context.lineContent = lineContent;
 };
-
