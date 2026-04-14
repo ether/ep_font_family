@@ -1,34 +1,9 @@
 'use strict';
 
-const fonts = [
-  'fontarial',
-  'fontavant-garde',
-  'fontbookman',
-  'fontcalibri',
-  'fontcourier',
-  'fontgaramond',
-  'fonthelvetica',
-  'fontmonospace',
-  'fontpalatino',
-  'fonttimes-new-roman',
-];
+const {tagAttribute} = require('ep_plugin_helpers/attributes');
+const fonts = require('../../fonts');
 
-exports.collectContentPre = (hook, context) => {
-  const tname = context.tname;
-  const state = context.state;
-  if (fonts.indexOf(tname) !== -1) {
-    context.cc.doAttrib(state, tname);
-  }
-};
+const fontFamily = tagAttribute({tags: fonts});
 
-// never seems to be run
-exports.collectContentPost = (hook, context) => {
-  const tname = context.tname;
-  const state = context.state;
-  const lineAttributes = state.lineAttributes;
-  const tagIndex = tname;
-
-  if (tagIndex >= 0) {
-    delete lineAttributes.sub;
-  }
-};
+exports.collectContentPre = fontFamily.collectContentPre;
+exports.collectContentPost = fontFamily.collectContentPost;
