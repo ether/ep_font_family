@@ -35,11 +35,10 @@ exports.eejsBlock_dd_format = (hookName, args, cb) => {
 
 // Allow <whatever> to be an attribute
 exports.aceAttribClasses = (hookName, attr, cb) => {
-  for (const i of fonts) {
-    const font = fonts[i];
+  for (const font of fonts) {
     attr[font] = `tag:font${font}`;
   }
-  cb(attr);
+  return cb(attr);
 };
 
 /** ******************
@@ -48,10 +47,10 @@ exports.aceAttribClasses = (hookName, attr, cb) => {
 
 // Add the props to be supported in export
 exports.exportHtmlAdditionalTags = (hook, pad, cb) => {
-  cb(fonts);
+  return cb(fonts);
 };
 
-exports.getLineHTMLForExport = async (hook, context, cb) => {
+exports.getLineHTMLForExport = async (hook, context) => {
   let lineContent = context.lineContent;
   fonts.forEach((font) => {
     if (lineContent) {
@@ -63,9 +62,3 @@ exports.getLineHTMLForExport = async (hook, context, cb) => {
   context.lineContent = lineContent;
 };
 
-
-/* eslint-disable-next-line no-extend-native, max-len */
-String.prototype.replaceAll = function (str1, str2, ignore) {
-/* eslint-disable-next-line no-useless-escape, max-len */
-  return this.replace(new RegExp(str1.replace(/([\/\,\!\\\^\$\{\}\[\]\(\)\.\*\+\?\|\<\>\-\&])/g, '\\$&'), (ignore ? 'gi' : 'g')), (typeof (str2) === 'string') ? str2.replace(/\$/g, '$$$$') : str2);
-};
