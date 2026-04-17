@@ -6,5 +6,10 @@
             data-l10n-id="ep_font_family.font"
             data-l10n-attr="aria-label">
         <option value="dummy" selected data-l10n-id="ep_font_family.family">Font</option>
+<% fonts.forEach((font) => {
+     const name = font.substring(4);
+     const label = (name.charAt(0).toUpperCase() + name.slice(1)).split('-').join(' '); %>
+        <option value="<%= font %>"><%= label %></option>
+<% }); %>
     </select>
 </li>
