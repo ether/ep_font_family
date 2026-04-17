@@ -3,8 +3,10 @@
 const fonts = require('./fonts');
 const {template} = require('ep_plugin_helpers');
 
-exports.eejsBlock_editbarMenuLeft = template('ep_font_family/templates/editbarButtons.ejs');
-exports.eejsBlock_dd_format = template('ep_font_family/templates/fileMenu.ejs');
+exports.eejsBlock_editbarMenuLeft = template(
+    'ep_font_family/templates/editbarButtons.ejs', {vars: () => ({fonts})});
+exports.eejsBlock_dd_format = template(
+    'ep_font_family/templates/fileMenu.ejs', {vars: () => ({fonts})});
 
 // Server-side aceAttribClasses — maps font names to tag: prefix.
 // This must match the client-side mapping exactly.

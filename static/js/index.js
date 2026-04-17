@@ -10,14 +10,12 @@ exports.aceRegisterBlockElements = fontFamily.aceRegisterBlockElements;
 exports.aceAttribClasses = fontFamily.aceAttribClasses;
 
 exports.postAceInit = (hook, context) => {
+  // Font options are rendered server-side by the editbarButtons.ejs and
+  // fileMenu.ejs templates (from ./fonts.js). Previously this hook
+  // appended them after Etherpad had already wrapped the <select> in
+  // niceSelect, so the File menu dropdown showed only the placeholder
+  // (#28). We just bind the change handler here.
   const select = $('select.family-selection');
-  for (const font of fonts) {
-    const name = font.substring(4);
-    let label = name.charAt(0).toUpperCase() + name.slice(1);
-    label = label.split('-').join(' ');
-    select.append($('<option>').attr('value', font).text(label));
-  }
-  select.niceSelect('update');
   select.on('change', function () {
     const value = $(this).val();
     context.ace.callWithAce((ace) => {
