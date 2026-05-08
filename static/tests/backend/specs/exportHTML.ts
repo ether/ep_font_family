@@ -32,13 +32,13 @@ describe('ep_font_family — round-trip via inline style="font-family"', functio
   // Without the import-side style reader, font is dropped.
   before(async function () { agent = await init(); });
 
-  const cases: Array<[string, string, RegExp]> = [
-    ['arial', 'Arial', /font-family:arial/i],
-    ['times-new-roman', "'Times New Roman'", /font-family:times-new-roman/i],
-    ['courier', 'courier', /font-family:courier/i],
+  const cases: Array<[string, string]> = [
+    ['arial', 'Arial'],
+    ['times-new-roman', "'Times New Roman'"],
+    ['courier', 'courier'],
   ];
 
-  for (const [tag, cssValue, expectedRe] of cases) {
+  for (const [tag, cssValue] of cases) {
     it(`preserves font-family:${cssValue} through round-trip`, async function () {
       const padID = randomString(5);
       await createPad(padID);
