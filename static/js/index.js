@@ -5,9 +5,22 @@ const fonts = require('../../fonts');
 
 const fontFamily = tagAttribute({tags: fonts});
 
-exports.aceAttribsToClasses = fontFamily.aceAttribsToClasses;
 exports.aceRegisterBlockElements = fontFamily.aceRegisterBlockElements;
-exports.aceAttribClasses = fontFamily.aceAttribClasses;
+
+// Deliberately not `fontFamily.aceAttribClasses`: core's linestylefilter
+// looks a set attribute up in ATTRIB_CLASSES by name only and never
+// looks at its value, so a font whose value is the *string* "false"
+// (what pads written by ep_font_family <= 0.5.98 stored for the fonts
+// that were cleared, see #73) still got its class and its `<font...>`
+// tag. Mapping the attribute here instead lets us ignore those stale
+// values, so old pads render with the single font they were given.
+exports.aceAttribsToClasses = (hook, context) => {
+  if (!fonts.includes(context.key)) return;
+  if (!context.value || context.value === 'false') return [];
+  // `tag:x` makes core's domline emit `<x>` around the text as well as
+  // adding the `x` class, which is what the editor CSS styles.
+  return [`tag:${context.key}`];
+};
 
 exports.postAceInit = (hook, context) => {
   // Font options are rendered server-side by the editbarButtons.ejs and
@@ -20,7 +33,11 @@ exports.postAceInit = (hook, context) => {
     const value = $(this).val();
     context.ace.callWithAce((ace) => {
       for (const f of fonts) {
-        ace.ace_setAttributeOnSelection(f, false);
+        // '' removes the attribute. Passing `false` used to write the
+        // *string* "false" into the attribute pool (core stringifies
+        // attribute values), and core treats any non-empty value as
+        // set -- so every font ended up applied at once (#73).
+        ace.ace_setAttributeOnSelection(f, '');
       }
       ace.ace_setAttributeOnSelection(value, true);
     }, 'insertfontFamily', true);
@@ -43,7 +60,9 @@ exports.aceEditEvent = (hook, call) => {
     if (call.rep.selStart[1] === 1 && call.rep.alltext[0] === '*') return;
 
     for (const font of fonts) {
-      if (call.editorInfo.ace_getAttributeOnSelection(font)) {
+      const value = call.editorInfo.ace_getAttributeOnSelection(font);
+      // "false" is a stale value written by ep_font_family <= 0.5.98, see #73.
+      if (value && value !== 'false') {
         select.val(font);
         break;
       }

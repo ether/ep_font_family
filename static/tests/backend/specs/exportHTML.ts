@@ -2,6 +2,10 @@
 
 import {init, generateJWTToken} from 'ep_etherpad-lite/tests/backend/common';
 import {randomString} from 'ep_etherpad-lite/static/js/pad_utils';
+import fs from 'fs';
+import path from 'path';
+import fonts from '../../../../fonts';
+import families from '../../../../font-families';
 
 let agent: any;
 const apiVersion = 1;
@@ -33,9 +37,9 @@ describe('ep_font_family — round-trip via inline style="font-family"', functio
   before(async function () { agent = await init(); });
 
   const cases: Array<[string, string]> = [
-    ['arial', 'Arial'],
-    ['times-new-roman', "'Times New Roman'"],
-    ['courier', 'courier'],
+    ['fontarial', 'Arial'],
+    ['fonttimes-new-roman', "'Times New Roman'"],
+    ['fontcourier', 'courier'],
   ];
 
   for (const [tag, cssValue] of cases) {
@@ -47,15 +51,69 @@ describe('ep_font_family — round-trip via inline style="font-family"', functio
       const res = await agent.get(getHTMLEndPointFor(padID))
           .set('Authorization', await generateJWTToken());
       const out: string = res.body.data.html;
-      // Re-export should contain a `font-family:<tag-without-font>` style
-      // (or the explicit tag form, depending on what
-      // getLineHTMLForExport produces).
-      const tagInner = tag;
-      const re = new RegExp(`font-family:${tagInner}|<font${tagInner}\\b`, 'i');
-      if (!re.test(out)) {
+      // Re-export uses the plugin's canonical CSS stack for that font.
+      if (!out.includes(`font-family:${families[tag]}`)) {
         throw new Error(
             `Font ${tag} not preserved on style-import round-trip. Got: ${out}`);
       }
     });
   }
+});
+
+describe('ep_font_family — exported HTML names a real typeface', function () {
+  // The exported style is what Word / LibreOffice / a browser reads when
+  // the pad is converted to .doc/.odt/.pdf. `font-family:times-new-roman`
+  // is not a font that exists anywhere, so the converter silently falls
+  // back to the default face and the formatting looks lost (#27).
+  before(async function () { agent = await init(); });
+
+  for (const [tag, family] of Object.entries(families) as Array<[string, string]>) {
+    it(`exports <${tag}> as font-family:${family}`, async function () {
+      const padID = randomString(5);
+      await createPad(padID);
+      await setHTML(padID, buildHTML(`<p>before <${tag}>styled</${tag}> after</p>`));
+      const res = await agent.get(getHTMLEndPointFor(padID))
+          .set('Authorization', await generateJWTToken());
+      const out: string = res.body.data.html;
+      if (!out.includes(`<span style="font-family:${family}">styled</span>`)) {
+        throw new Error(`Expected font-family:${family} in export. Got: ${out}`);
+      }
+      // The tag name itself is not a font name and must never be exported
+      // as one. (Only meaningful for the multi-word fonts, whose tag name
+      // is hyphenated: "times-new-roman" is nobody's font.)
+      if (tag.includes('-') && new RegExp(`font-family:\\s*${tag.substring(4)}\\b`).test(out)) {
+        throw new Error(`Export used the tag name as a font family. Got: ${out}`);
+      }
+    });
+  }
+
+  it('the editor CSS asks for the same stacks as the export', function () {
+    // What the author sees while editing has to be what the exported
+    // document asks for, otherwise "the font changed on export" (#27).
+    const css = fs.readFileSync(
+        path.join(__dirname, '../../../css/fonts.css'), 'utf8');
+    for (const font of fonts) {
+      const m = new RegExp(`${font}\\s*{\\s*font-family:\\s*([^;}]+)`).exec(css);
+      if (!m) throw new Error(`No rule for ${font} in static/css/fonts.css`);
+      if (m[1].trim() !== families[font]) {
+        throw new Error(`static/css/fonts.css has "${m[1].trim()}" for ${font}, ` +
+                        `font-families.js has "${families[font]}"`);
+      }
+    }
+  });
+
+  it('every font has a CSS stack whose first family maps back to it', function () {
+    if (Object.keys(families).length !== fonts.length) {
+      throw new Error('font-families.js and fonts.js are out of sync');
+    }
+    for (const font of fonts) {
+      const family = families[font];
+      if (!family) throw new Error(`No CSS font stack for ${font}`);
+      const canonical = family.split(',')[0].trim().replace(/^['"]|['"]$/g, '');
+      const tag = `font${canonical.toLowerCase().replace(/\s+/g, '-')}`;
+      if (tag !== font) {
+        throw new Error(`${font} exports as "${canonical}", which imports back as ${tag}`);
+      }
+    }
+  });
 });
