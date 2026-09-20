@@ -1,32 +1,36 @@
+/* Keep these font stacks in sync with ../../font-families.js, which is
+   what gets written into exported HTML/DOCX/ODT/PDF -- the editor and
+   the exported document should ask for the same typeface. There is a
+   test for it in static/tests/backend/specs/exportHTML.ts. */
 fontarial{
-  font-family: arial;
+  font-family: Arial, Helvetica, sans-serif;
 }
 fontavant-garde{
-  font-family: Avant Garde,Avantgarde,Century Gothic,CenturyGothic,AppleGothic,sans-serif;
+  font-family: 'Avant Garde', Avantgarde, 'Century Gothic', CenturyGothic, AppleGothic, sans-serif;
 }
 fontbookman{
-  font-family: bookman, Bookman Old Style;
+  font-family: Bookman, 'Bookman Old Style', serif;
 }
 fontcalibri{
-  font-family: Calibri,Candara,Segoe,Segoe UI,Optima,Arial,sans-serif;
+  font-family: Calibri, Candara, Segoe, 'Segoe UI', Optima, Arial, sans-serif;
 }
 fontcourier{
-  font-family: courier;
+  font-family: Courier, 'Courier New', monospace;
 }
 fontgaramond{
-  font-family: Garamond,Baskerville,Baskerville Old Face,Hoefler Text,Times New Roman,serif;
+  font-family: Garamond, Baskerville, 'Baskerville Old Face', 'Hoefler Text', 'Times New Roman', serif;
 }
 fonthelvetica{
-  font-family: helvetica;
+  font-family: Helvetica, Arial, sans-serif;
 }
 fontmonospace{
   font-family: monospace;
 }
 fontpalatino{
-  font-family: palatino;
+  font-family: Palatino, 'Palatino Linotype', 'Book Antiqua', serif;
 }
 fonttimes-new-roman{
-  font-family: times new roman;
+  font-family: 'Times New Roman', Times, serif;
 }
 *{
   font-family:inherit
