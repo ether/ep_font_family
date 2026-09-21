@@ -14,7 +14,7 @@ const editbarTmpl = path.resolve(
 const render = (p) => ejs.render(fs.readFileSync(p, 'utf8'), {fonts});
 
 describe(__filename, function () {
-  it('fileMenu.ejs renders an <option> per font (#28)', function () {
+  it('fileMenu.ejs renders an <option> per font (#28)', async function () {
     const html = render(fileMenuTmpl);
     for (const font of fonts) {
       assert(html.includes(`value="${font}"`),
@@ -22,7 +22,7 @@ describe(__filename, function () {
     }
   });
 
-  it('editbarButtons.ejs renders an <option> per font (#28)', function () {
+  it('editbarButtons.ejs renders an <option> per font (#28)', async function () {
     const html = render(editbarTmpl);
     for (const font of fonts) {
       assert(html.includes(`value="${font}"`),
